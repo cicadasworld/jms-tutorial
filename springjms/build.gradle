@@ -1,0 +1,38 @@
+import com.sun.org.apache.xalan.internal.xsltc.cmdline.Compile
+
+buildscript {
+	ext.springBootVersion = '2.3.0.RELEASE'
+	repositories {
+		maven {
+			url System.getenv('MAVEN_REPO_URL')
+		}
+	}
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+	}
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'
+
+group = 'com.jin'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    maven {
+        url System.getenv('MAVEN_REPO_URL')
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-artemis'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
